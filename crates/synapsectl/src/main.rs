@@ -552,18 +552,18 @@ fn monitor(cli: &Cli, poll: u64) -> Result<()> {
     let poll = (poll > 0).then(|| Duration::from_secs(poll));
     let mut next_poll = Instant::now();
     loop {
-        if let Some(interval) = poll {
-            if Instant::now() >= next_poll {
-                next_poll = Instant::now() + interval;
-                let link = dev.link_up()?;
-                let battery = if link { dev.battery().ok() } else { None };
-                println!(
-                    "{}  poll: link {}, battery {}",
-                    format_clock(std::time::SystemTime::now()),
-                    if link { "up" } else { "down" },
-                    battery.map(|b| format!("{b}%")).unwrap_or_else(|| "-".into())
-                );
-            }
+        if let Some(interval) = poll
+            && Instant::now() >= next_poll
+        {
+            next_poll = Instant::now() + interval;
+            let link = dev.link_up()?;
+            let battery = if link { dev.battery().ok() } else { None };
+            println!(
+                "{}  poll: link {}, battery {}",
+                format_clock(std::time::SystemTime::now()),
+                if link { "up" } else { "down" },
+                battery.map(|b| format!("{b}%")).unwrap_or_else(|| "-".into())
+            );
         }
         for event in dev.poll_incoming(Duration::from_millis(250))? {
             let time = format_clock(std::time::SystemTime::now());

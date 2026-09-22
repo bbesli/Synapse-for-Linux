@@ -116,7 +116,11 @@ pub fn tray_icon_rgba(size: u32, online: bool, battery: Option<u8>) -> Vec<u8> {
 
 /// RGBA -> ARGB32 in network byte order (StatusNotifierItem pixmaps).
 pub fn rgba_to_argb(rgba: &[u8]) -> Vec<u8> {
-    rgba.chunks_exact(4).flat_map(|p| [p[3], p[0], p[1], p[2]]).collect()
+    rgba.as_chunks::<4>()
+        .0
+        .iter()
+        .flat_map(|&[r, g, b, a]| [a, r, g, b])
+        .collect()
 }
 
 pub fn window_icon() -> egui::IconData {

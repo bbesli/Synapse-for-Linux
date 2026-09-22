@@ -161,16 +161,16 @@ pub fn eq_graph(ui: &mut Ui, id_salt: &str, bands: &mut Bands, ghost: Option<&Ba
     }
 
     // Ghost curve (applied state while editing).
-    if let Some(ghost) = ghost {
-        if ghost != bands {
-            let points = smooth_curve(&ghost.map(|b| Pos2::new(0.0, y_of(f32::from(b)))), &x_of, plot);
-            painter.add(Shape::dashed_line(
-                &points,
-                Stroke::new(1.2, TEXT_DIM.gamma_multiply(0.7)),
-                6.0,
-                4.0,
-            ));
-        }
+    if let Some(ghost) = ghost
+        && ghost != bands
+    {
+        let points = smooth_curve(&ghost.map(|b| Pos2::new(0.0, y_of(f32::from(b)))), &x_of, plot);
+        painter.add(Shape::dashed_line(
+            &points,
+            Stroke::new(1.2, TEXT_DIM.gamma_multiply(0.7)),
+            6.0,
+            4.0,
+        ));
     }
 
     // Filled area between the curve and 0 dB, then the curve itself.
