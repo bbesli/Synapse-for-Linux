@@ -3,8 +3,9 @@
 > 🇹🇷 **Kısaca:** Katkılarınızı bekliyoruz! Issue ve pull request'leri Türkçe ya da
 > İngilizce yazabilirsiniz. En değerli katkı yeni cihaz desteğidir: cihazınızın bilgilerini
 > [cihaz talebi](https://github.com/bbesli/Synapse-for-Linux/issues/new?template=device_support.md)
-> ile paylaşın. Aşağıdaki "Legal" bölümü önemlidir: Razer'a ait kod, logo ya da dosya
-> eklemeyin.
+> ile paylaşın. `main` dalı korumalıdır: değişiklikler yalnızca pull request ile, CI geçtikten
+> ve proje sahibi onayladıktan sonra birleştirilir. Aşağıdaki "Legal" bölümü önemlidir:
+> Razer'a ait kod, logo ya da dosya eklemeyin.
 
 Thank you for helping! This project exists to keep the spirit of Synapse alive on Linux, and
 every contribution helps: device support, bug reports, translations, docs or code.
@@ -52,6 +53,19 @@ cargo test --workspace
 ```
 
 CI runs the same checks on every pull request.
+
+## Pull requests
+
+`main` is protected, so every change goes through a pull request:
+
+1. Fork the repository (or create a branch if you have write access) and commit your work there.
+2. Open a pull request against `main` and fill in the template.
+3. CI (`fmt`, `clippy`, tests) must pass. Workflows from first-time contributors start after a
+   maintainer approves them.
+4. The maintainer ([@bbesli](https://github.com/bbesli), see `.github/CODEOWNERS`) must approve the
+   pull request. New commits after an approval need a new approval, and all review conversations
+   must be resolved.
+5. The maintainer merges it. Force pushes to `main` and deleting it are blocked.
 
 ## Project layout
 
