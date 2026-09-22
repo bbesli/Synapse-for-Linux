@@ -126,6 +126,17 @@ On Linux, `synapsectl monitor` shows unsolicited reports, and `synapsectl raw <d
 - Avoid new dependencies unless they clearly pay off.
 - Keep pull requests small and focused, and describe which hardware you tested on.
 
+## Releasing (maintainers)
+
+1. Update the version in `Cargo.toml` and `packaging/arch/PKGBUILD`, run `cargo build` so
+   `Cargo.lock` follows, then add a `CHANGELOG.md` entry and `docs/release-notes/vX.Y.Z.md`.
+2. Commit, then tag and push: `git tag -a vX.Y.Z -m "Synapse for Linux X.Y.Z" && git push origin main vX.Y.Z`.
+3. Publish the release:
+   `gh release create vX.Y.Z --verify-tag --title "Synapse for Linux vX.Y.Z" --notes-file docs/release-notes/vX.Y.Z.md`.
+   The *Release* workflow then builds on Ubuntu 22.04 (glibc 2.35), tests and attaches
+   `synapse-linux-x86_64.tar.gz` and `SHA256SUMS`. This takes a few minutes; until then the
+   quick-install link does not work.
+
 ## Legal
 
 - **Do not contribute any Razer property:** no code from Synapse (decompiled or otherwise),
