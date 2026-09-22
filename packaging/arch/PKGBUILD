@@ -1,0 +1,53 @@
+# Maintainer: Burak Beşli <https://github.com/bbesli>
+#
+# Local package for Arch Linux / CachyOS. Builds from this source tree:
+#   cd packaging/arch && makepkg -si
+pkgname=synapse-linux
+pkgver=0.1.0
+pkgrel=1
+pkgdesc="Unofficial Razer Synapse alternative for Linux (BlackShark V2 HyperSpeed: EQ, sidetone, battery, sleep timer)"
+arch=('x86_64' 'aarch64')
+url="https://github.com/bbesli/Synapse-for-Linux"
+license=('MIT')
+depends=('gcc-libs' 'glibc' 'hicolor-icon-theme')
+makedepends=('cargo')
+optdepends=(
+    'pipewire: software microphone noise suppression'
+    'polkit: grant device access from the app'
+    'vulkan-icd-loader: Vulkan rendering (falls back to OpenGL)'
+)
+options=('!lto')
+
+_srcroot="$(realpath "$startdir/../..")"
+
+prepare() {
+    cd "$_srcroot"
+    export RUSTUP_TOOLCHAIN=stable
+    cargo fetch --locked --target "$(rustc -vV | sed -n 's/host: //p')"
+}
+
+build() {
+    cd "$_srcroot"
+    export RUSTUP_TOOLCHAIN=stable
+    export CARGO_TARGET_DIR="$srcdir/target"
+    cargo build --frozen --release
+}
+
+check() {
+    cd "$_srcroot"
+    export RUSTUP_TOOLCHAIN=stable
+    export CARGO_TARGET_DIR="$srcdir/target"
+    cargo test --frozen --release -p synapse-core -p synapsectl
+}
+
+package() {
+    cd "$_srcroot"
+    install -Dm755 "$srcdir/target/release/synapse-linux" "$pkgdir/usr/bin/synapse-linux"
+    install -Dm755 "$srcdir/target/release/synapsectl" "$pkgdir/usr/bin/synapsectl"
+    install -Dm644 packaging/udev/70-synapse-linux.rules "$pkgdir/usr/lib/udev/rules.d/70-synapse-linux.rules"
+    install -Dm644 packaging/synapse-linux.desktop "$pkgdir/usr/share/applications/synapse-linux.desktop"
+    install -Dm644 packaging/icons/synapse-linux.svg "$pkgdir/usr/share/icons/hicolor/scalable/apps/synapse-linux.svg"
+    install -Dm644 LICENSE "$pkgdir/usr/share/licenses/$pkgname/LICENSE"
+    install -Dm644 README.md "$pkgdir/usr/share/doc/$pkgname/README.md"
+    install -Dm644 docs/PROTOCOL.md "$pkgdir/usr/share/doc/$pkgname/PROTOCOL.md"
+}

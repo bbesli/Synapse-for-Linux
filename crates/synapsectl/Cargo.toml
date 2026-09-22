@@ -1,0 +1,19 @@
+[package]
+name = "synapsectl"
+description = "Command line control for Razer devices (Synapse for Linux)"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+rust-version.workspace = true
+authors.workspace = true
+repository.workspace = true
+homepage.workspace = true
+
+[dependencies]
+synapse-core.workspace = true
+anyhow.workspace = true
+clap.workspace = true
+log.workspace = true
+env_logger.workspace = true
+serde_json.workspace = true
+libc.workspace = true

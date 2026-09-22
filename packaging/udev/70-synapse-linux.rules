@@ -1,0 +1,14 @@
+# Synapse for Linux: let the logged-in desktop user talk to Razer HID devices
+# through /dev/hidraw* without root. systemd-logind grants the access (and
+# revokes it on logout) because of the "uaccess" tag.
+#
+# Install:  sudo install -m 0644 70-synapse-linux.rules /etc/udev/rules.d/
+#           sudo udevadm control --reload-rules
+#           sudo udevadm trigger --subsystem-match=hidraw
+#
+# The file name must sort before 73-seat-late.rules for "uaccess" to apply.
+
+# USB (HyperSpeed dongles, wired devices)
+SUBSYSTEM=="hidraw", ATTRS{idVendor}=="1532", TAG+="uaccess"
+# Other buses (e.g. Bluetooth): HID device names look like 0005:1532:XXXX.YYYY
+SUBSYSTEM=="hidraw", KERNELS=="*:1532:*", TAG+="uaccess"

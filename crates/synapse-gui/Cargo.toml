@@ -1,0 +1,29 @@
+[package]
+name = "synapse-gui"
+description = "Graphical Razer device manager for Linux (Synapse for Linux)"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+rust-version.workspace = true
+authors.workspace = true
+repository.workspace = true
+homepage.workspace = true
+
+[[bin]]
+name = "synapse-linux"
+path = "src/main.rs"
+
+[dependencies]
+synapse-core.workspace = true
+anyhow.workspace = true
+log.workspace = true
+env_logger.workspace = true
+eframe.workspace = true
+egui.workspace = true
+ksni.workspace = true
+notify-rust.workspace = true
+libc.workspace = true
+dirs.workspace = true
+
+[dev-dependencies]
+egui_kittest = { version = "0.36", features = ["eframe", "wgpu", "snapshot"] }

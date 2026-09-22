@@ -1,0 +1,14 @@
+[Desktop Entry]
+Type=Application
+Name=Synapse for Linux
+GenericName=Razer Device Manager
+GenericName[tr]=Razer Cihaz Yöneticisi
+Comment=Configure Razer headsets: equalizer, mic monitoring, battery, auto power-off
+Comment[tr]=Razer kulaklık ayarları: ekolayzır, mikrofon izleme, pil, otomatik kapanma
+Exec=synapse-linux
+Icon=synapse-linux
+Terminal=false
+Categories=Settings;HardwareSettings;
+Keywords=razer;synapse;headset;blackshark;hyperspeed;equalizer;eq;sidetone;kulaklık;ekolayzır;
+StartupWMClass=synapse-linux
+StartupNotify=true
